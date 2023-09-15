@@ -23,6 +23,7 @@ var displaySearchedCities = function(event) {
 
 
     storeCities();
+    cityInputEl.value = ""
 }
 
-searchButtonEl.addEventListener("submit", displaySearchedCities);
+searchButtonEl.addEventListener("click", displaySearchedCities);
