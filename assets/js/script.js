@@ -33,14 +33,23 @@ var addCityToList = function(event) {
 }
 
 var renderPastSearches = function() {
+    searchedCitiesUl.innerHTML = ""
     for (i = 0; i < searchedCitiesList.length; i++) {
         var citiesListEl = document.createElement("li");
         citiesListEl.textContent = searchedCitiesList[i];
+        searchedCitiesUl.appendChild(citiesListEl);
     }
-    searchedCitiesUl.appendChild(citiesListEl);
+}
+
+var init = function() {
+
+    var storedCities = JSON.parse(localStorage.getItem("searchedCitiesList"))
+    if (storedCities !== null) {
+        searchedCitiesList = storedCities;
+    }
+    renderPastSearches();
 }
 
 
-
-
 searchButtonEl.addEventListener("click", addCityToList);
+init();
