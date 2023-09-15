@@ -41,14 +41,31 @@ var renderPastSearches = function() {
     }
 }
 
-var init = function() {
-
-    var storedCities = JSON.parse(localStorage.getItem("searchedCitiesList"))
+var loadSearchedCities = function() {
+    var storedCities = JSON.parse(localStorage.getItem("searchedCitiesList"));
     if (storedCities !== null) {
         searchedCitiesList = storedCities;
     }
+}
+
+var init = function() {
+    loadSearchedCities();
     renderPastSearches();
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 searchButtonEl.addEventListener("click", addCityToList);
