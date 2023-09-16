@@ -9,6 +9,7 @@ var currentCityName = document.querySelector("#current-city-name")
 var currentTempEl = document.querySelector("#current-temp")
 var currentWindEl = document.querySelector("#current-wind")
 var currentHumidityEl = document.querySelector("#current-humidity")
+var currentDateEl = document.querySelector("#current-date")
 
 
 var searchedCitiesAndCountries = {}
@@ -115,20 +116,20 @@ var getWeatherData = function(cityLat, cityLon, cityInputCapital) {
     .then(function(data) {
         console.log(data)
         var currentTemp = data["list"][0]["main"]["temp"]
-        console.log(currentTemp)
         var currentWind = data["list"][0]["wind"]["speed"]
         var currentHumidity = data["list"][0]["main"]["humidity"]
+        
         currentWeatherDisplay(cityInputCapital, currentTemp, currentWind, currentHumidity)
-
     })
 }
 
 var currentWeatherDisplay = function(cityInputCapital, currentTemp, currentWind, currentHumidity) {
+    var dateToday = dayjs().format("(DD/MM/YYYY)")
     currentCityName.textContent = cityInputCapital;
-    currentTempEl.textContent = currentTemp;
-    currentWindEl.textContent = currentWind;
-    currentHumidityEl.textContent = currentHumidity;
-
+    currentDateEl.textContent = dateToday;
+    currentTempEl.textContent = currentTemp + " °C";
+    currentWindEl.textContent = currentWind + " m/s";
+    currentHumidityEl.textContent = currentHumidity + " %";
 }
 
 
