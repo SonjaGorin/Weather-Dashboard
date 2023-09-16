@@ -9,43 +9,72 @@ var countryInputEl = document.querySelector("#country-input")
 
 var searchedCitiesAndCountries = {}
 
-var storeCities = function() {
+// this function stores cities and countries from input to local storage
+var storeCitiesAndCountries = function() {
     localStorage.setItem("searchedCitiesAndCountries", JSON.stringify(searchedCitiesAndCountries));
 }
 
-var addInputsToList = function(event) {
-    event.preventDefault();
-    var cityInput = cityInputEl.value.trim();
-    var cityInputUpper = cityInput[0].toUpperCase() + cityInput.slice(1);
-    var countryInput = countryInputEl.value.trim();
-    var countryInputUpper = countryInput[0].toUpperCase() + countryInput.slice(1);
-    if (cityInputEl.value === "" || countryInputEl.value === "") {
-        // cityInputEl.value = "";
-        // countryInputEl.value = "";
-        return;
-    }
-    for (var city in searchedCitiesAndCountries) {
-        if (city === cityInputUpper && searchedCitiesAndCountries[city] === countryInputUpper) {
-            cityInputEl.value = "";
-            countryInputEl.value = "";
-            return;            
-        }
-    }
-    // cityInputEl.value = "";   
-    // countryInputEl.value = "";
-    searchedCitiesAndCountries[cityInputUpper] = countryInputUpper;
-
-    storeCities();
-    renderPastSearches();
+// this function clears input fields when called
+var clearInputs = function() {
     cityInputEl.value = "";
     countryInputEl.value = "";
+}
+
+// when you pass string as an argument to this function 
+// it returnes string with first capital letter 
+var startingWithCapital = function(str) {
+    return str[0].toUpperCase() + str.slice(1);
+}
+
+// this function starts when search button is clicked
+// it calls saveSearchInput function
+var search = function(event) {
+    event.preventDefault();
+    saveSearchInput();
+}
+
+// this function calls newCityAnd country function
+// and clears input fields after every search button clicked
+// if there are no inputs, do nothing
+// if there are inputs adds them as city and country pairs to the object
+// stores them and displays them
+var saveSearchInput = function() {
+    var cityAndCountry = newCityAndCountry();
+    clearInputs();
+    if (!cityAndCountry) {
+        return;
+    }
+    let [cityInputCapital, countryInputCapital] = cityAndCountry;
+    searchedCitiesAndCountries[cityInputCapital] = countryInputCapital;
+    storeCitiesAndCountries();
+    renderPastSearches();
+}
+
+// this function checks if either of input fields are empty
+// and does nothing if they are
+// it also checks if there is already same city and country pair in the object
+// and does nothing if there is
+var newCityAndCountry = function() {
+    var cityInput = cityInputEl.value.trim();   
+    var countryInput = countryInputEl.value.trim();
+    
+    if (cityInput === "" || countryInput === "") {
+        return;
+    }
+    var cityInputCapital = startingWithCapital(cityInput);
+    var countryInputCapital = startingWithCapital(countryInput);
+
+    if (searchedCitiesAndCountries[cityInputCapital] === countryInputCapital) {
+        return;
+    }
+    return [cityInputCapital, countryInputCapital]
 }
 
 var renderPastSearches = function() {
     searchedCitiesUl.innerHTML = ""
     for (var city in searchedCitiesAndCountries) {
         var citiesListEl = document.createElement("li");
-        citiesListEl.textContent = city;
+        citiesListEl.textContent = city + ", " + searchedCitiesAndCountries[city];
         searchedCitiesUl.appendChild(citiesListEl);
     }
 }
@@ -53,9 +82,7 @@ var renderPastSearches = function() {
 var loadSearchedCities = function() {
     var storedCities = JSON.parse(localStorage.getItem("searchedCitiesAndCountries"));
     if (storedCities !== null) {
-        for (var city in searchedCitiesAndCountries) {
-            city = storedCities;
-        }
+        searchedCitiesAndCountries = storedCities
     }
 }
 
@@ -65,19 +92,5 @@ var init = function() {
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-searchButtonEl.addEventListener("click", addInputsToList);
+searchButtonEl.addEventListener("click", search);
 init();
