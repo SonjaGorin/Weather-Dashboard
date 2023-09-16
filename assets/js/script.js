@@ -1,4 +1,4 @@
-var weatherApiUrl = "https://api.openweathermap.org/data/2.5/forecast?lat={lat}&lon={lon}&appid=" + apiKey
+
 
 var apiKey = "347c279390e03c0864320067fefb8c47"
 var cityInputEl = document.querySelector("#city-input")
@@ -37,6 +37,7 @@ var search = function(event) {
     }
     saveSearchInput(cityInputCapital, countryInputCapital);
     getLocationData(cityInputCapital, countryInputCapital);
+
 }
 
 // this function calls newCityAnd country function
@@ -86,8 +87,7 @@ var init = function() {
     renderPastSearches();
 }
 
-var getLocationData = function (cityInputCapital, countryInputCapital) {
-    console.log(cityInputCapital)
+var renderWeather = function (cityInputCapital, countryInputCapital) {
     var cityApiUrl = "http://api.openweathermap.org/geo/1.0/direct?q=" + cityInputCapital + "," + countryInputCapital + "&limit=1&appid=" + apiKey
 
     fetch(cityApiUrl)
@@ -95,17 +95,23 @@ var getLocationData = function (cityInputCapital, countryInputCapital) {
         return response.json();
     })
     .then(function(data) {
-        console.log(data)
+        var cityLat = data[0]["lat"].toString()
+        var cityLon = data[0]["lon"].toString()
+        getWeatherData(cityLat, cityLon)
     })
-        
-    
 }
 
+var getWeatherData = function(cityLat, cityLon) {
+    var weatherApiUrl = "https://api.openweathermap.org/data/2.5/forecast?lat=" + cityLat + "&lon=" + cityLon + "&appid=" + apiKey;
 
-
-
-
-
+    fetch(weatherApiUrl)
+    .then(function(response) {
+        return response.json();
+    })
+    .then(function(data) {
+        console.log(data)
+    })
+}
 
 
 
