@@ -10,6 +10,7 @@ var currentTempEl = document.querySelector("#current-temp")
 var currentWindEl = document.querySelector("#current-wind")
 var currentHumidityEl = document.querySelector("#current-humidity")
 var currentDateEl = document.querySelector("#current-date")
+var currentWeatherIconEl = document.querySelector("#today-icon")
 
 
 var searchedCitiesAndCountries = {}
@@ -118,15 +119,18 @@ var getWeatherData = function(cityLat, cityLon, cityInputCapital) {
         var currentTemp = data["list"][0]["main"]["temp"]
         var currentWind = data["list"][0]["wind"]["speed"]
         var currentHumidity = data["list"][0]["main"]["humidity"]
+        var currentWeatherIcon = data["list"][0]["weather"][0]["icon"]
+        var iconUrl = "https://openweathermap.org/img/wn/" + currentWeatherIcon + ".png"
         
-        currentWeatherDisplay(cityInputCapital, currentTemp, currentWind, currentHumidity)
+        currentWeatherDisplay(cityInputCapital, currentTemp, currentWind, currentHumidity, iconUrl)
     })
 }
 
-var currentWeatherDisplay = function(cityInputCapital, currentTemp, currentWind, currentHumidity) {
+var currentWeatherDisplay = function(cityInputCapital, currentTemp, currentWind, currentHumidity, iconUrl) {
     var dateToday = dayjs().format("(DD/MM/YYYY)")
     currentCityName.textContent = cityInputCapital;
     currentDateEl.textContent = dateToday;
+    currentWeatherIconEl.setAttribute("src", iconUrl)
     currentTempEl.textContent = currentTemp + " °C";
     currentWindEl.textContent = currentWind + " m/s";
     currentHumidityEl.textContent = currentHumidity + " %";
