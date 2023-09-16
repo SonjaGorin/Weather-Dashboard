@@ -75,9 +75,9 @@ var newCityAndCountry = function() {
 var renderPastSearches = function() {
     searchedCitiesUl.innerHTML = ""
     for (var city in searchedCitiesAndCountries) {
-        var citiesListEl = document.createElement("li");
-        citiesListEl.textContent = city + ", " + searchedCitiesAndCountries[city];
-        searchedCitiesUl.appendChild(citiesListEl);
+        var citiesButtonEl = document.createElement("button");
+        citiesButtonEl.textContent = city + ", " + searchedCitiesAndCountries[city];
+        searchedCitiesUl.appendChild(citiesButtonEl);
     }
 }
 
@@ -136,6 +136,16 @@ var currentWeatherDisplay = function(cityInputCapital, currentTemp, currentWind,
     currentHumidityEl.textContent = currentHumidity + " %";
 }
 
+var getNextFiveDates = function() {
+    var nextFiveDates = []
+    for (var i = 1; i <= 5; i++) {
+        var date = dayjs().add(i, "day").format("YYYY-MM-DD")
+        nextFiveDates.push(date)
+    }
+    return nextFiveDates
+}
+
+getNextFiveDates()
 
 
 
