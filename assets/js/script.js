@@ -1,5 +1,5 @@
-var weatherApiUrl = "https://api.openweathermap.org/data/2.5/forecast?lat={lat}&lon={lon}&appid={API key}"
-// var cityApiUrl = 
+var weatherApiUrl = "https://api.openweathermap.org/data/2.5/forecast?lat={lat}&lon={lon}&appid=" + apiKey
+
 var apiKey = "347c279390e03c0864320067fefb8c47"
 var cityInputEl = document.querySelector("#city-input")
 var searchButtonEl = document.querySelector("#search-button")
@@ -30,7 +30,13 @@ var startingWithCapital = function(str) {
 // it calls saveSearchInput function
 var search = function(event) {
     event.preventDefault();
-    saveSearchInput();
+    let [cityInputCapital, countryInputCapital] = newCityAndCountry();
+    clearInputs();
+    if (!cityInputCapital || !countryInputCapital) {
+        return;
+    }
+    saveSearchInput(cityInputCapital, countryInputCapital);
+    getLocationData(cityInputCapital, countryInputCapital);
 }
 
 // this function calls newCityAnd country function
@@ -38,13 +44,10 @@ var search = function(event) {
 // if there are no inputs, do nothing
 // if there are inputs adds them as city and country pairs to the object
 // stores them and displays them
-var saveSearchInput = function() {
-    var cityAndCountry = newCityAndCountry();
-    clearInputs();
-    if (!cityAndCountry) {
+var saveSearchInput = function(cityInputCapital, countryInputCapital) {
+    if (searchedCitiesAndCountries[cityInputCapital] === countryInputCapital) {
         return;
     }
-    let [cityInputCapital, countryInputCapital] = cityAndCountry;
     searchedCitiesAndCountries[cityInputCapital] = countryInputCapital;
     storeCitiesAndCountries();
     renderPastSearches();
@@ -57,19 +60,11 @@ var saveSearchInput = function() {
 var newCityAndCountry = function() {
     var cityInput = cityInputEl.value.trim();   
     var countryInput = countryInputEl.value.trim();
-    
-    if (cityInput === "" || countryInput === "") {
-        return;
-    }
     var cityInputCapital = startingWithCapital(cityInput);
     var countryInputCapital = startingWithCapital(countryInput);
-
-    if (searchedCitiesAndCountries[cityInputCapital] === countryInputCapital) {
-        return;
-    }
     return [cityInputCapital, countryInputCapital]
 }
-
+    
 var renderPastSearches = function() {
     searchedCitiesUl.innerHTML = ""
     for (var city in searchedCitiesAndCountries) {
@@ -90,6 +85,29 @@ var init = function() {
     loadSearchedCities();
     renderPastSearches();
 }
+
+var getLocationData = function (cityInputCapital, countryInputCapital) {
+    console.log(cityInputCapital)
+    var cityApiUrl = "http://api.openweathermap.org/geo/1.0/direct?q=" + cityInputCapital + "," + countryInputCapital + "&limit=1&appid=" + apiKey
+
+    fetch(cityApiUrl)
+    .then(function(response) {
+        return response.json();
+    })
+    .then(function(data) {
+        console.log(data)
+    })
+        
+    
+}
+
+
+
+
+
+
+
+
 
 
 searchButtonEl.addEventListener("click", search);
