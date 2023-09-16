@@ -5,6 +5,10 @@ var cityInputEl = document.querySelector("#city-input")
 var searchButtonEl = document.querySelector("#search-button")
 var searchedCitiesUl = document.querySelector(".searched-cities")
 var countryInputEl = document.querySelector("#country-input")
+var currentCityName = document.querySelector("#current-city-name")
+var currentTempEl = document.querySelector("#current-temp")
+var currentWindEl = document.querySelector("#current-wind")
+var currentHumidityEl = document.querySelector("#current-humidity")
 
 
 var searchedCitiesAndCountries = {}
@@ -36,7 +40,7 @@ var search = function(event) {
         return;
     }
     saveSearchInput(cityInputCapital, countryInputCapital);
-    getLocationData(cityInputCapital, countryInputCapital);
+    renderWeather(cityInputCapital, countryInputCapital);
 
 }
 
@@ -97,12 +101,12 @@ var renderWeather = function (cityInputCapital, countryInputCapital) {
     .then(function(data) {
         var cityLat = data[0]["lat"].toString()
         var cityLon = data[0]["lon"].toString()
-        getWeatherData(cityLat, cityLon)
+        getWeatherData(cityLat, cityLon, cityInputCapital)
     })
 }
 
-var getWeatherData = function(cityLat, cityLon) {
-    var weatherApiUrl = "https://api.openweathermap.org/data/2.5/forecast?lat=" + cityLat + "&lon=" + cityLon + "&appid=" + apiKey;
+var getWeatherData = function(cityLat, cityLon, cityInputCapital) {
+    var weatherApiUrl = "https://api.openweathermap.org/data/2.5/forecast?units=metric&lat=" + cityLat + "&lon=" + cityLon + "&appid=" + apiKey;
 
     fetch(weatherApiUrl)
     .then(function(response) {
@@ -110,7 +114,21 @@ var getWeatherData = function(cityLat, cityLon) {
     })
     .then(function(data) {
         console.log(data)
+        var currentTemp = data["list"][0]["main"]["temp"]
+        console.log(currentTemp)
+        var currentWind = data["list"][0]["wind"]["speed"]
+        var currentHumidity = data["list"][0]["main"]["humidity"]
+        currentWeatherDisplay(cityInputCapital, currentTemp, currentWind, currentHumidity)
+
     })
+}
+
+var currentWeatherDisplay = function(cityInputCapital, currentTemp, currentWind, currentHumidity) {
+    currentCityName.textContent = cityInputCapital;
+    currentTempEl.textContent = currentTemp;
+    currentWindEl.textContent = currentWind;
+    currentHumidityEl.textContent = currentHumidity;
+
 }
 
 
