@@ -123,6 +123,8 @@ var getWeatherData = function(cityLat, cityLon, cityInputCapital) {
         var iconUrl = "https://openweathermap.org/img/wn/" + currentWeatherIcon + ".png"
         
         currentWeatherDisplay(cityInputCapital, currentTemp, currentWind, currentHumidity, iconUrl)
+        var nextFiveDatesWithTime = getNextFiveDates()
+        getForecastData(nextFiveDatesWithTime, data)
     })
 }
 
@@ -137,13 +139,42 @@ var currentWeatherDisplay = function(cityInputCapital, currentTemp, currentWind,
 }
 
 var getNextFiveDates = function() {
-    var nextFiveDates = []
+    var nextFiveDatesWithTime = []
     for (var i = 1; i <= 5; i++) {
-        var date = dayjs().add(i, "day").format("YYYY-MM-DD")
-        nextFiveDates.push(date)
+        var dateAndTime = dayjs().add(i, "day").format("YYYY-MM-DD 15:00:00")
+        nextFiveDatesWithTime.push(dateAndTime)
     }
-    return nextFiveDates
+    return nextFiveDatesWithTime
 }
+
+var getForecastData = function(nextFiveDatesWithTime, data) {
+    var forecastData = [];
+    for (var dateTimeIndex = 0; dateTimeIndex < nextFiveDatesWithTime.length; dateTimeIndex++) {
+        var dateWithTime = nextFiveDatesWithTime[dateTimeIndex]
+        for (var forecastIndex = 0; forecastIndex < data["list"].length; forecastIndex++) {
+            var dataDateWithTime = data["list"][forecastIndex]["dt_txt"]
+            if (dateWithTime === dataDateWithTime) {
+                var forecastTemp = data["list"][forecastIndex]["main"]["temp"]
+                var forecastWind = data["list"][forecastIndex]["wind"]["speed"]
+                var forecastHumidity = data["list"][forecastIndex]["main"]["humidity"]
+                var forecastIcon = data["list"][forecastIndex]["weather"][0]["icon"]
+                var forecastDate = dayjs(dataDateWithTime.split(" ")[0])
+                forecastData.push({
+                    "date": forecastDate,
+                    "iconUrl": "https://openweathermap.org/img/wn/" + forecastIcon + ".png",
+                    "temp": forecastTemp,
+                    "wind": forecastWind,
+                    "humidity": forecastHumidity,
+                });
+            }
+        }
+    }
+    return forecastData
+}
+
+
+
+
 
 getNextFiveDates()
 
