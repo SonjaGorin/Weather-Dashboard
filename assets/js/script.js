@@ -58,9 +58,28 @@ var renderPastSearches = function() {
     searchedCitiesUl.innerHTML = ""
     for (var city in searchedCitiesAndCountries) {
         var citiesButtonEl = document.createElement("button");
+        citiesButtonEl.setAttribute("data-city", city)
+        citiesButtonEl.setAttribute("data-country", searchedCitiesAndCountries[city])
         citiesButtonEl.textContent = city + ", " + searchedCitiesAndCountries[city];
         searchedCitiesUl.appendChild(citiesButtonEl);
+        citiesButtonEl.addEventListener("click", searchAgain)
     }
+}
+
+var searchAgain = function(event) {
+    console.log(event)
+    event.preventDefault();
+    let [cityInputCapital, countryInputCapital] = oldCityAndCountry(event.target);
+    clearInputs();
+    if (!cityInputCapital || !countryInputCapital) {
+        return;
+    }
+    saveSearchInput(cityInputCapital, countryInputCapital);
+    renderWeather(cityInputCapital, countryInputCapital);
+}
+
+var oldCityAndCountry = function(button) {
+    return [button.dataset.city, button.dataset.country]
 }
 
 var loadSearchedCities = function() {
