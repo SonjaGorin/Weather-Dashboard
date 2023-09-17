@@ -23,7 +23,7 @@ var clearInputs = function() {
 }
 
 var startingWithCapital = function(str) {
-    return str[0].toUpperCase() + str.slice(1);
+    return str.replace(/\b\w/g, x => x.toUpperCase());
 }
 
 var search = function(event) {
