@@ -1,5 +1,3 @@
-
-
 var apiKey = "347c279390e03c0864320067fefb8c47"
 var cityInputEl = document.querySelector("#city-input")
 var searchButtonEl = document.querySelector("#search-button")
@@ -11,6 +9,7 @@ var currentWindEl = document.querySelector("#current-wind")
 var currentHumidityEl = document.querySelector("#current-humidity")
 var currentDateEl = document.querySelector("#current-date")
 var currentWeatherIconEl = document.querySelector("#today-icon")
+var fiveDayCardEl = document.querySelector("#five-day-weather-card")
 
 
 var searchedCitiesAndCountries = {}
@@ -124,7 +123,9 @@ var getWeatherData = function(cityLat, cityLon, cityInputCapital) {
         
         currentWeatherDisplay(cityInputCapital, currentTemp, currentWind, currentHumidity, iconUrl)
         var nextFiveDatesWithTime = getNextFiveDates()
-        getForecastData(nextFiveDatesWithTime, data)
+        var forecastData = getForecastData(nextFiveDatesWithTime, data)
+        
+        console.log(renderDayForecast(forecastData[0]))
     })
 }
 
@@ -172,7 +173,30 @@ var getForecastData = function(nextFiveDatesWithTime, data) {
     return forecastData
 }
 
+var renderDayForecast = function(dayForecast) {
+    var oneDayCardEl = document.createElement("section")
+    var dateEl = document.createElement("p")
+    dateEl.textContent = dayForecast["date"].format("(DD/MM/YYYY)")
+    oneDayCardEl.appendChild(dateEl);
+    var iconEl = document.createElement("img")
+    iconEl.setAttribute("src", dayForecast["iconUrl"])
+    iconEl.setAttribute("alt", "Icon representing current weather")
+    oneDayCardEl.appendChild(iconEl);
+    var tempEl = document.createElement("p")
+    tempEl.textContent = dayForecast["temp"] + " °C"
+    oneDayCardEl.appendChild(tempEl);
+    var windEl = document.createElement("p")
+    windEl.textContent = dayForecast["wind"] + " m/s"
+    oneDayCardEl.appendChild(windEl);
+    var humidityEl = document.createElement("p")
+    humidityEl.textContent = dayForecast["humidity"] + " %"
+    oneDayCardEl.appendChild(humidityEl);
+    return oneDayCardEl
+}
 
+var renderFiveDayForecast(oneDayCardEl) {
+    
+}
 
 
 
