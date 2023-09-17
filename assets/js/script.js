@@ -9,30 +9,23 @@ var currentWindEl = document.querySelector("#current-wind")
 var currentHumidityEl = document.querySelector("#current-humidity")
 var currentDateEl = document.querySelector("#current-date")
 var currentWeatherIconEl = document.querySelector("#today-icon")
-var fiveDayCardEl = document.querySelector("#five-day-weather-card")
-
+var fiveDayCardEl = document.querySelector(".five-day-weather-card")
 
 var searchedCitiesAndCountries = {}
 
-// this function stores cities and countries from input to local storage
 var storeCitiesAndCountries = function() {
     localStorage.setItem("searchedCitiesAndCountries", JSON.stringify(searchedCitiesAndCountries));
 }
 
-// this function clears input fields when called
 var clearInputs = function() {
     cityInputEl.value = "";
     countryInputEl.value = "";
 }
 
-// when you pass string as an argument to this function 
-// it returnes string with first capital letter 
 var startingWithCapital = function(str) {
     return str[0].toUpperCase() + str.slice(1);
 }
 
-// this function starts when search button is clicked
-// it calls saveSearchInput function
 var search = function(event) {
     event.preventDefault();
     let [cityInputCapital, countryInputCapital] = newCityAndCountry();
@@ -42,14 +35,8 @@ var search = function(event) {
     }
     saveSearchInput(cityInputCapital, countryInputCapital);
     renderWeather(cityInputCapital, countryInputCapital);
-
 }
 
-// this function calls newCityAnd country function
-// and clears input fields after every search button clicked
-// if there are no inputs, do nothing
-// if there are inputs adds them as city and country pairs to the object
-// stores them and displays them
 var saveSearchInput = function(cityInputCapital, countryInputCapital) {
     if (searchedCitiesAndCountries[cityInputCapital] === countryInputCapital) {
         return;
@@ -59,10 +46,6 @@ var saveSearchInput = function(cityInputCapital, countryInputCapital) {
     renderPastSearches();
 }
 
-// this function checks if either of input fields are empty
-// and does nothing if they are
-// it also checks if there is already same city and country pair in the object
-// and does nothing if there is
 var newCityAndCountry = function() {
     var cityInput = cityInputEl.value.trim();   
     var countryInput = countryInputEl.value.trim();
@@ -124,8 +107,7 @@ var getWeatherData = function(cityLat, cityLon, cityInputCapital) {
         currentWeatherDisplay(cityInputCapital, currentTemp, currentWind, currentHumidity, iconUrl)
         var nextFiveDatesWithTime = getNextFiveDates()
         var forecastData = getForecastData(nextFiveDatesWithTime, data)
-        
-        console.log(renderDayForecast(forecastData[0]))
+        renderFiveDayForecast(forecastData)
     })
 }
 
@@ -194,14 +176,11 @@ var renderDayForecast = function(dayForecast) {
     return oneDayCardEl
 }
 
-var renderFiveDayForecast(oneDayCardEl) {
-    
+var renderFiveDayForecast = function(forecastData) {
+    for (var i = 0; i < forecastData.length; i++) {
+        fiveDayCardEl.appendChild(renderDayForecast(forecastData[i]))
+    }
 }
-
-
-
-getNextFiveDates()
-
 
 
 searchButtonEl.addEventListener("click", search);
