@@ -67,14 +67,8 @@ var renderPastSearches = function() {
 }
 
 var searchAgain = function(event) {
-    console.log(event)
     event.preventDefault();
     let [cityInputCapital, countryInputCapital] = oldCityAndCountry(event.target);
-    clearInputs();
-    if (!cityInputCapital || !countryInputCapital) {
-        return;
-    }
-    saveSearchInput(cityInputCapital, countryInputCapital);
     renderWeather(cityInputCapital, countryInputCapital);
 }
 
