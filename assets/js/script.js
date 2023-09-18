@@ -22,10 +22,12 @@ var clearInputs = function() {
     countryInputEl.value = "";
 }
 
+// make every first letter of the word upper case
 var startingWithCapital = function(str) {
     return str.replace(/\b\w/g, x => x.toUpperCase());
 }
 
+// search function gets called when search button is clicked
 var search = function(event) {
     event.preventDefault();
     let [cityInputCapital, countryInputCapital] = newCityAndCountry();
@@ -37,6 +39,7 @@ var search = function(event) {
     renderWeather(cityInputCapital, countryInputCapital);
 }
 
+// stores only new searches to local storage
 var saveSearchInput = function(cityInputCapital, countryInputCapital) {
     if (searchedCitiesAndCountries[cityInputCapital] === countryInputCapital) {
         return;
@@ -46,6 +49,7 @@ var saveSearchInput = function(cityInputCapital, countryInputCapital) {
     renderPastSearches();
 }
 
+// make first letter of user inputs upper case
 var newCityAndCountry = function() {
     var cityInput = cityInputEl.value.trim();   
     var countryInput = countryInputEl.value.trim();
@@ -66,6 +70,7 @@ var renderPastSearches = function() {
     }
 }
 
+// does the search again when past searched city is clicked
 var searchAgain = function(event) {
     event.preventDefault();
     let [cityInputCapital, countryInputCapital] = oldCityAndCountry(event.target);
@@ -88,6 +93,7 @@ var init = function() {
     renderPastSearches();
 }
 
+// gets longitude and latitude from the city and country name using openweathermap geo api
 var renderWeather = function (cityInputCapital, countryInputCapital) {
     var cityApiUrl = "http://api.openweathermap.org/geo/1.0/direct?q=" + cityInputCapital + "," + countryInputCapital + "&limit=1&appid=" + apiKey
 
@@ -102,6 +108,8 @@ var renderWeather = function (cityInputCapital, countryInputCapital) {
     })
 }
 
+// gets weather data using latitude and longitude and openweathermap api
+// gets values from data
 var getWeatherData = function(cityLat, cityLon, cityInputCapital) {
     var weatherApiUrl = "https://api.openweathermap.org/data/2.5/forecast?units=metric&lat=" + cityLat + "&lon=" + cityLon + "&appid=" + apiKey;
 
@@ -110,7 +118,6 @@ var getWeatherData = function(cityLat, cityLon, cityInputCapital) {
         return response.json();
     })
     .then(function(data) {
-        console.log(data)
         var currentTemp = data["list"][0]["main"]["temp"]
         var currentWind = data["list"][0]["wind"]["speed"]
         var currentHumidity = data["list"][0]["main"]["humidity"]
