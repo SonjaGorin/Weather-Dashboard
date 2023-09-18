@@ -96,12 +96,17 @@ h1 {
     color: var(--dark-purple)
 }
 
-.five-day-weather-card {
+#today-icon {
+    height: 40px;
+    width: 40px;
+}
+
+.forecast-weather-card {
     margin: 20px 40px;
     padding:20px 40px;
 }
 
 h3 {
     color: var(--dark-purple);
-    font-
+    font-size: 20px;
 }

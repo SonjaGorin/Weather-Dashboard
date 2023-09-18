@@ -190,8 +190,14 @@ var renderDayForecast = function(dayForecast) {
 }
 
 var renderFiveDayForecast = function(forecastData) {
+    
+    
+    fiveDayCardEl.innerHTML = "";
     for (var i = 0; i < forecastData.length; i++) {
         fiveDayCardEl.appendChild(renderDayForecast(forecastData[i]))
+        var fiveDayForecastEl = document.createElement("h3")
+        fiveDayForecastEl.textContent = "5-Day Forecast:"
+        fiveDayForecastEl.setAttribute = ("id", "five-day-forecast")
     }
 }
 
