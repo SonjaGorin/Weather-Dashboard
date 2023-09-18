@@ -12,6 +12,7 @@ body {
     font-family: Arial;
     flex-direction: column;
     line-height: 1.3;
+
 }
 
 header {
@@ -25,4 +26,40 @@ h1 {
     font-size: 35px;
     text-align: center;
     padding: 20px;
+}
+
+form,
+.past-searches-card {
+    display:grid;
+    width: 30%;
+    margin: 20px 40px;
+
+}
+
+#form-label {
+    font-size: 20px;
+    font-weight: bolder;
+    padding-bottom: 10px;
+    color: var(--dark-purple)
+}
+
+#city-input,
+#country-input {
+    width: 70%;
+    padding: 5px 2px;
+    margin: 5px 0;
+    border: 2px solid var(--dark-purple);
+}
+
+#search-button {
+    width: 70%;
+    padding: 5px 2px;
+    margin: 17px 0 5px 0px;
+    background-color: #d381b8;
+    font-weight: bold;
+    border-radius: 5px;
+}
+
+.searched-cities {
+    display:grid;
 }
