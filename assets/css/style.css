@@ -80,3 +80,21 @@ form,
     background-color: #f0d3e6;
     font-weight: bold;
 }
+
+.today-weather-card {
+    display:grid;
+    width: 70%;
+    border: 2px solid var(--dark-purple);
+    float:right;
+    margin: 20px 40px;
+    padding:20px 40px;
+}
+
+#current-city-name {
+    font-size: 40px;
+    color: var(--dark-purple)
+}
+
+.five-day-weather-card {
+
+}

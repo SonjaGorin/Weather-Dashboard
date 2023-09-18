@@ -178,13 +178,13 @@ var renderDayForecast = function(dayForecast) {
     iconEl.setAttribute("alt", "Icon representing current weather")
     oneDayCardEl.appendChild(iconEl);
     var tempEl = document.createElement("p")
-    tempEl.textContent = dayForecast["temp"] + " °C"
+    tempEl.textContent = "Temp: " + dayForecast["temp"] + " °C"
     oneDayCardEl.appendChild(tempEl);
     var windEl = document.createElement("p")
-    windEl.textContent = dayForecast["wind"] + " m/s"
+    windEl.textContent = "Wind: " + dayForecast["wind"] + " m/s"
     oneDayCardEl.appendChild(windEl);
     var humidityEl = document.createElement("p")
-    humidityEl.textContent = dayForecast["humidity"] + " %"
+    humidityEl.textContent = "Humidity: " + dayForecast["humidity"] + " %"
     oneDayCardEl.appendChild(humidityEl);
     return oneDayCardEl
 }
