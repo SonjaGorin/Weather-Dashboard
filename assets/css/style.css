@@ -19,7 +19,7 @@ main {
 }
 
 header {
-    color: var(--light-beige);
+    color: var(--white);
     background-color: var(--violet);
     justify-content: center;
 }
@@ -91,6 +91,19 @@ h1 {
     padding:20px 40px;
 }
 
+.city-information {
+    display:flex;
+    margin-bottom: 20px;
+}
+
+#current-date {
+    font-weight: bold;
+    font-size: 25px;
+    color: var(--dark-purple);
+    padding-top: 10px;
+    margin: 0 10px;
+}
+
 #current-city-name {
     font-size: 40px;
     color: var(--dark-purple)
@@ -103,10 +116,28 @@ h1 {
 
 .forecast-weather-card {
     margin: 20px 40px;
-    padding:20px 40px;
 }
 
 h3 {
     color: var(--dark-purple);
     font-size: 20px;
 }
+
+.five-day-weather-card {
+    display: flex;
+}
+
+.five-day-weather-card section {
+    background-color:#66164b;
+    margin: 20px 15px 0 5px;
+    padding: 10px 50px 20px 10px;
+    line-height: 2;
+    color:var(--white);
+    border: 2px solid var(--dark-purple)
+}
+
+#forecast-date {
+    font-weight: bold;
+    font-size: 20px;
+}
+

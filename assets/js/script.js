@@ -171,7 +171,8 @@ var getForecastData = function(nextFiveDatesWithTime, data) {
 var renderDayForecast = function(dayForecast) {
     var oneDayCardEl = document.createElement("section")
     var dateEl = document.createElement("p")
-    dateEl.textContent = dayForecast["date"].format("(DD/MM/YYYY)")
+    dateEl.textContent = dayForecast["date"].format("DD/MM/YYYY")
+    dateEl.setAttribute("id", "forecast-date")
     oneDayCardEl.appendChild(dateEl);
     var iconEl = document.createElement("img")
     iconEl.setAttribute("src", dayForecast["iconUrl"])
@@ -189,15 +190,10 @@ var renderDayForecast = function(dayForecast) {
     return oneDayCardEl
 }
 
-var renderFiveDayForecast = function(forecastData) {
-    
-    
+var renderFiveDayForecast = function(forecastData) { 
     fiveDayCardEl.innerHTML = "";
     for (var i = 0; i < forecastData.length; i++) {
         fiveDayCardEl.appendChild(renderDayForecast(forecastData[i]))
-        var fiveDayForecastEl = document.createElement("h3")
-        fiveDayForecastEl.textContent = "5-Day Forecast:"
-        fiveDayForecastEl.setAttribute = ("id", "five-day-forecast")
     }
 }
 
