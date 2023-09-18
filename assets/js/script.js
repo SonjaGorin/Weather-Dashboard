@@ -95,7 +95,7 @@ var init = function() {
 
 // gets longitude and latitude from the city and country name using openweathermap geo api
 var renderWeather = function (cityInputCapital, countryInputCapital) {
-    var cityApiUrl = "http://api.openweathermap.org/geo/1.0/direct?q=" + cityInputCapital + "," + countryInputCapital + "&limit=1&appid=" + apiKey
+    var cityApiUrl = "https://api.openweathermap.org/geo/1.0/direct?q=" + cityInputCapital + "," + countryInputCapital + "&limit=1&appid=" + apiKey
 
     fetch(cityApiUrl)
     .then(function(response) {
