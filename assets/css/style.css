@@ -1,0 +1,28 @@
+:root {
+    --white: white;
+    --light-beige: #fbf8ca;
+    --light-purple: #a13f80;
+    --violet: #5e1043;
+    --dark-purple: #360827;
+    --black: black;
+}
+
+body {
+    display: flex;
+    font-family: Arial;
+    flex-direction: column;
+    line-height: 1.3;
+}
+
+header {
+    color: var(--light-beige);
+    background-color: var(--violet);
+    justify-content: center;
+    
+}
+
+h1 {
+    font-size: 35px;
+    text-align: center;
+    padding: 20px;
+}
