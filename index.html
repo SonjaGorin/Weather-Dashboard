@@ -15,32 +15,34 @@
     </header>
 
     <main>
-        <section class="form-card">
+        <section class="searches">
             <form class="search-form">
                 <label id="form-label" for="city">Search for City and Country:</label>
                 <input name="city-name" type="text" autofocus="true" id="city-input" placeholder="Enter the name of the city"/>
                 <input name="country-name" type="text" autofocus="true" id="country-input" placeholder="Enter the name of the country"/>
                 <button type="submit" id="search-button">Search</button>
               </form>
+        
+            <section class="past-searches-card">
+                <h2>Your past searches:</h2>
+                <section class="past-searches-display"></section>
+                    <ul class="searched-cities"></ul>
+            </section>
         </section>
 
-        <section class="past-searches-card">
-            <h2>Your past searches:</h2>
-            <section class="past-searches-display"></section>
-                <ul class="searched-cities"></ul>
-        </section>
-
-        <section class="today-weather-card">
-            <h2 id="current-city-name"></h2>
-            <p id="current-date"></p>
-            <img id="today-icon" alt="Icon representing current weather"></img>
-            <p>Temp: <span id="current-temp"></span></p>
-            <p>Wind: <span id="current-wind"></span></p>
-            <p>Humidity: <span id="current-humidity"></span></p>
-        </section>
-
-        <section class="five-day-weather-card">
-            <h3 id="five-day-forecast">5-Day Forecast:</h3>
+        <section class="weather-cards">
+            <section class="today-weather-card">
+                <h2 id="current-city-name"></h2>
+                <p id="current-date"></p>
+                <img id="today-icon" alt="Icon representing current weather"></img>
+                <p>Temp: <span id="current-temp"></span></p>
+                <p>Wind: <span id="current-wind"></span></p>
+                <p>Humidity: <span id="current-humidity"></span></p>
+            </section>
+            
+            <section class="five-day-weather-card">
+                <h3 id="five-day-forecast">5-Day Forecast:</h3>
+            </section>
         </section>
     </main>
 
